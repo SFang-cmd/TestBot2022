@@ -53,8 +53,8 @@ public class FollowBall extends CommandBase{
         turnSpeed *= Math.signum(xPos);
         // System.out.println(travelSpeed + " Travel Speed");
         // System.out.println(turnSpeed + " Turn speed");
-        System.out.println("Camera X: " + xPos);
-        System.out.println("Distance: " + distance);
+        // System.out.println("Camera X: " + xPos);
+        // System.out.println("Distance: " + distance);
         if(Math.abs(xPos) < 5){
             turnSpeed = 0;
         }

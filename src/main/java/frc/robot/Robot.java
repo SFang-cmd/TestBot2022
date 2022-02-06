@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
 		// UserInterface.driverController.A.whenPressed(new RotateToBall());
 		// UserInterface.driverController.X.whenPressed(new FollowBall());
 		UserInterface.driverController.X.whileHeld(new FollowBall());
-		UserInterface.driverController.Y.whileHeld(new AlignHub());
+		UserInterface.driverController.Y.whileHeld(new ShootDistance());
   	}
 
 	@Override

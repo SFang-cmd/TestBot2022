@@ -5,8 +5,8 @@ import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-// import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-// import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.SPI;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -51,7 +51,7 @@ public class DriveBase extends SubsystemBase {
 	public double rightEncoderValue;
 
 	// Gyro initializing
-	// public ADXRS450_Gyro gyroBoi;
+	public static ADXRS450_Gyro gyroBoi;
 
 	// Creating tankDrive instance
 	public DifferentialDrive tank;
@@ -102,8 +102,8 @@ public class DriveBase extends SubsystemBase {
 		this.leftEncoderValue = leftMiddleMaster.getSelectedSensorPosition(0);
 		this.rightEncoderValue = rightMiddleMaster.getSelectedSensorPosition(0);
 		
-		// Gyro with SPI.Port.kOnboardCS0 being the port enum that is provided by WPILib
-		// this.gyroBoi = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+		// Gyro with SPI.Port.kOnboardCS0 being the port enum that is provided by WPILib	
+		this.gyroBoi = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 		
 		// Built in check if the gyro is the correct one and it is connected
 		// System.out.println(gyroBoi.isConnected)
@@ -133,7 +133,7 @@ public class DriveBase extends SubsystemBase {
 	 * resets the Gyro to 0
 	 */
 	public void resetGyroAngle(){
-		// gyroBoi.reset();
+		gyroBoi.reset();
 	}
 	
 	/**
@@ -141,8 +141,7 @@ public class DriveBase extends SubsystemBase {
 	 * @return Returns the angle deviating from the last reset angle
 	 */
 	public double getGyroAngle(){
-		// return gyroBoi.getAngle();
-        return 422;
+		return gyroBoi.getAngle();
 	}
 	
 	/**

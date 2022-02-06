@@ -15,15 +15,12 @@ public class RobotMap {
         COMP, PBOT, TOASTER 
     }
 
-    public static int FlykS = 0;
-    public static int FlykV = 0;
-    public static int FlykA = 0;
-
+    
     
     
     // Left side motor port numbers
     public static int leftMiddleMasterPort = 2;
-
+    
     public static int leftFrontFollower = 3;
     public static int leftBackFollower = 6;
     
@@ -32,13 +29,13 @@ public class RobotMap {
     
     public static int rightFrontFollower = 5;
     public static int rightBackFollower = 4;
-
+    
     // Falcon drive ports
     public static int leftFront = 4;
     public static int rightFront = 3;
     public static int leftBack = 2;
     public static int rightBack = 1;
-
+    
     
     // Intake stuff
     // public static int intakePivot = 46;
@@ -47,7 +44,7 @@ public class RobotMap {
     // public static int lift = 11;
     public static int extensionMotorPort = 422;
     public static int intakeMotorPort = 422;
-
+    
     // Shooter
     public static int rightFlyPort = 6;
     public static int leftFlyPort = 3;
@@ -63,10 +60,21 @@ public class RobotMap {
     public static final double hubCameraDegreesHoriz = 15;
 
     public static final int maxNoTargetCounter = 9;
-
+    
     public static final int BlueBallPipelineIndex = 0;
     public static final int RedBallPipelineIndex = 1;
+    
+    //PIDFollowBall params for PIDController
+    public static double kP = 1;
+    public static double kI = 1;
+    public static double kD = 1;
 
+    // Shooter feedforward
+    public static int FlykS = 0;
+    public static int FlykV = 0;
+    public static int FlykA = 0;
+
+    
     public enum TeamColor{
         RED,BLUE;
     }
