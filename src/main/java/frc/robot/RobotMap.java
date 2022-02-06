@@ -49,13 +49,29 @@ public class RobotMap {
     public static int intakeMotorPort = 422;
 
     // Shooter
-    public static int rightFlyPort = 422;
-    public static int leftFlyPort = 422;
+    public static int rightFlyPort = 6;
+    public static int leftFlyPort = 3;
+    public static final int flyRolliRoll = 0;
 
     // Dimensions for Vision Calculations
-    public static double cameraHeightMeters = 0.25;
-    public static double ballHeightMeters = 0.1;
-    public static double cameraDegreesHoriz = -25;
+    public static final double ballCameraHeightMeters = 0.75;
+    public static final double ballHeightMeters = 0.1;
+    public static final double ballCameraDegreesHoriz = -25;
+    
+    public static final double targetCameraHeightMeters = 0.79;
+    public static final double targetHeightMeters = 2.642;
+    public static final double hubCameraDegreesHoriz = 15;
+
+    public static final int maxNoTargetCounter = 9;
+
+    public static final int BlueBallPipelineIndex = 0;
+    public static final int RedBallPipelineIndex = 1;
+
+    public enum TeamColor{
+        RED,BLUE;
+    }
+
+    public static final TeamColor teamColor = TeamColor.RED;
 
     /**
      * @param inches Inches to convert.

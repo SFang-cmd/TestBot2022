@@ -33,8 +33,10 @@ public class Robot extends TimedRobot {
 		Subsystems.driveBase.setDefaultCommand(new TankDrive());
 
 		// Might need to be moved to teleopPeriodic in order to function, but it might also work here.
-		UserInterface.driverController.A.whenPressed(new RotateToBall());
-		UserInterface.driverController.X.whenPressed(new FollowBall());
+		// UserInterface.driverController.A.whenPressed(new RotateToBall());
+		// UserInterface.driverController.X.whenPressed(new FollowBall());
+		UserInterface.driverController.X.whileHeld(new FollowBall());
+		UserInterface.driverController.Y.whileHeld(new AlignHub());
   	}
 
 	@Override
@@ -63,7 +65,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		// Might be janky
 		if(UserInterface.driverController.getAButton()){
-			Subsystems.frontCam.snapshot(true);
+			// Subsystems.frontCam.snapshot(true);
 		}
 	}
 

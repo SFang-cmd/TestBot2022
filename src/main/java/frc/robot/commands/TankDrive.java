@@ -69,7 +69,7 @@ public class TankDrive extends CommandBase{
         leftLastSpeed = leftSpeed;
         rightLastSpeed = rightSpeed;
 
-        // System.out.println(leftSpeed);
+        // System.out.println("Speed: " + leftSpeed);
         // System.out.println(rightSpeed);
 
         Subsystems.driveBase.tank.tankDrive(leftSpeed, rightSpeed);

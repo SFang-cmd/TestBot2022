@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import frc.robot.RobotMap;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.BangBangController;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -16,6 +17,7 @@ public class FlyShootiShoot extends SubsystemBase {
     CANSparkMax leftShoot;
     CANSparkMax rightShoot;
     SimpleMotorFeedforward feedForward;
+    BangBangController bangBangController = new BangBangController();
 
     public FlyShootiShoot(){
         this.leftShoot = new CANSparkMax(RobotMap.leftFlyPort, MotorType.kBrushless);
@@ -33,7 +35,23 @@ public class FlyShootiShoot extends SubsystemBase {
         rightShoot.set(0);
     }
 
-    public double getVelocity(){
+    public double getLeftVelocity(){
         return leftShoot.getEncoder().getVelocity()/5600;
-    }
+    }   
+
+    public double getRightVelocity(){
+        return rightShoot.getEncoder().getVelocity()/5600;
+    }   
+
+    public void smartShootiShoot(double leftVelocity, double rightVelocity) {
+        // leftShoot.setVoltage(feedForward.calculate(leftVelocity));
+        // rightShoot.setVoltage(feedForward.calculate(-rightVelocity));
+
+        leftShoot.setVoltage(feedForward.calculate(leftVelocity));
+        rightShoot.setVoltage(feedForward.calculate(-rightVelocity));
+
+        leftShoot.set(bangBangController.calculate(getLeftVelocity(), 0));
+        rightShoot.set(bangBangController.calculate(getRightVelocity(), 0));
+    
+    }    
 }
