@@ -33,6 +33,7 @@ public class TankDrive extends CommandBase{
         this.rightSpeedDiff = 0;
     }
 
+    @Override
     public void execute(){
         leftSpeed = UserInterface.driverController.getLeftJoystickY();
         rightSpeed = UserInterface.driverController.getRightJoystickY();

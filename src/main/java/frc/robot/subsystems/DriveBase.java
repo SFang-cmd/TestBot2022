@@ -51,7 +51,7 @@ public class DriveBase extends SubsystemBase {
 	public double rightEncoderValue;
 
 	// Gyro initializing
-	public static ADXRS450_Gyro gyroBoi;
+	public ADXRS450_Gyro gyroBoi;
 
 	// Creating tankDrive instance
 	public DifferentialDrive tank;
@@ -67,40 +67,51 @@ public class DriveBase extends SubsystemBase {
 
 		// Declares the instantiated variables that store the motor controller objects
 		// Setting left motors to their respective motor objects
-        this.leftMiddleMaster = new WPI_TalonSRX(RobotMap.leftMiddleMasterPort);
-        this.leftFrontMotor = new WPI_VictorSPX(RobotMap.leftFrontFollower);
-        this.leftBackMotor = new WPI_VictorSPX(RobotMap.leftBackFollower);
+        // this.leftMiddleMaster = new WPI_TalonSRX(RobotMap.leftMiddleMasterPort);
+        // this.leftFrontMotor = new WPI_VictorSPX(RobotMap.leftFrontFollower);
+        // this.leftBackMotor = new WPI_VictorSPX(RobotMap.leftBackFollower);
 		
-		// Setting right motors to their respective motor objects
-        this.rightMiddleMaster = new WPI_TalonSRX(RobotMap.rightMiddleMasterPort);        
-        this.rightFrontMotor = new WPI_VictorSPX(RobotMap.rightFrontFollower);
-		this.rightBackMotor = new WPI_VictorSPX(RobotMap.rightBackFollower);
+		// // Setting right motors to their respective motor objects
+        // this.rightMiddleMaster = new WPI_TalonSRX(RobotMap.rightMiddleMasterPort);        
+        // this.rightFrontMotor = new WPI_VictorSPX(RobotMap.rightFrontFollower);
+		// this.rightBackMotor = new WPI_VictorSPX(RobotMap.rightBackFollower);
 		
 		// Since we use the same type of motors, both think that front is clockwise,
 		// but on the left side, the clockwise rotation causes it to move backward,
 		// thus inverting it causes both motors to move in the correct way
-		leftMiddleMaster.setInverted(true);
-		leftFrontMotor.setInverted(true);
-		leftBackMotor.setInverted(true);
+		// leftMiddleMaster.setInverted(true);
+		// leftFrontMotor.setInverted(true);
+		// leftBackMotor.setInverted(true);
         
-        this.leftMotorGroup = new MotorControllerGroup(leftMiddleMaster, leftFrontMotor, leftBackMotor);
-        this.rightMotorGroup = new MotorControllerGroup(rightMiddleMaster, rightFrontMotor, rightBackMotor);
-
+        // this.leftMotorGroup = new MotorControllerGroup(leftMiddleMaster, leftFrontMotor, leftBackMotor);
+        // this.rightMotorGroup = new MotorControllerGroup(rightMiddleMaster, rightFrontMotor, rightBackMotor);
+		
 		// For Falcon
+		
+		// Falcon motors
+		this.leftFront = new WPI_TalonFX(RobotMap.leftFront);
+		this.rightFront = new WPI_TalonFX(RobotMap.rightFront);
+		this.leftBack = new WPI_TalonFX(RobotMap.leftBack);
+		this.rightBack = new WPI_TalonFX(RobotMap.rightBack);
+		
+		// Setting left to be inverted
+		// rightFront.setInverted(true);
+		// rightBack.setInverted(true);
 
-		// this.leftFront = new WPI_TalonFX(RobotMap.leftFront);
-		// this.rightFront = new WPI_TalonFX(RobotMap.rightFront);
-		// this.leftBack = new WPI_TalonFX(RobotMap.leftBack);
-		// this.rightBack = new WPI_TalonFX(RobotMap.rightBack);
-
-		// this.leftMotorGroup = new MotorControllerGroup(leftFront, leftBack);
-		// this.rightMotorGroup = new MotorControllerGroup(rightFront, rightBack);
+		this.leftMotorGroup = new MotorControllerGroup(leftFront, leftBack);
+		this.rightMotorGroup = new MotorControllerGroup(rightFront, rightBack);
 		// Building the actual robot drive train
+		rightMotorGroup.setInverted(true);
+		
 		this.tank = new DifferentialDrive(leftMotorGroup, rightMotorGroup);
 		
-		// Setting up and getting the encoder values
-		this.leftEncoderValue = leftMiddleMaster.getSelectedSensorPosition(0);
-		this.rightEncoderValue = rightMiddleMaster.getSelectedSensorPosition(0);
+		// Setting up and getting the encoder values for Talon SRX
+		// this.leftEncoderValue = leftMiddleMaster.getSelectedSensorPosition(0);
+		// this.rightEncoderValue = rightMiddleMaster.getSelectedSensorPosition(0);
+
+		// Setting up and getting the encoder values for Talon FX
+		this.leftEncoderValue = leftFront.getSelectedSensorPosition(0);
+		this.rightEncoderValue = rightFront.getSelectedSensorPosition(0);
 		
 		// Gyro with SPI.Port.kOnboardCS0 being the port enum that is provided by WPILib	
 		this.gyroBoi = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);

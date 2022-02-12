@@ -1,57 +1,119 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotMap;
+
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.math.controller.BangBangController;
+import edu.wpi.first.math.controller.PIDController;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class FlyShootiShoot extends SubsystemBase {
+
     // For BangBangController, need velocity of current motor and the desired velocity
     // https://first.wpi.edu/wpilib/allwpilib/docs/release/java/edu/wpi/first/math/controller/BangBangController.html#getSetpoint()
     // https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/bang-bang.html
 
-    CANSparkMax leftShoot;
-    CANSparkMax rightShoot;
+    WPI_TalonFX leftShoot;
+    WPI_TalonFX rightShoot;
+    WPI_TalonFX topRoller;
     SimpleMotorFeedforward feedForward;
-    BangBangController bangBangController = new BangBangController();
-
+    PIDController leftPID;
+    PIDController rightPID;
+    PIDController topPID;
+    
     public FlyShootiShoot(){
-        this.leftShoot = new CANSparkMax(RobotMap.leftFlyPort, MotorType.kBrushless);
-        this.rightShoot = new CANSparkMax(RobotMap.rightFlyPort, MotorType.kBrushless);
+        this.leftShoot = new WPI_TalonFX(RobotMap.LEFT_FLY_PORT);
+        this.rightShoot = new WPI_TalonFX(RobotMap.RIGHT_FLY_PORT);
+        this.topRoller = new WPI_TalonFX(RobotMap.FLY_ROLLI_ROLL);
         this.feedForward = new SimpleMotorFeedforward(RobotMap.FlykS, RobotMap.FlykV);
+        this.leftPID = new PIDController(RobotMap.FlykP, RobotMap.FlykI, RobotMap.FlykD);
+        this.rightPID = new PIDController(RobotMap.FlykP, RobotMap.FlykI, RobotMap.FlykD);
+        this.topPID = new PIDController(RobotMap.FlykP, RobotMap.FlykI, RobotMap.FlykD);
     }
 
-    public void setShootSpeed(double speed){
-        leftShoot.set(speed);
-        rightShoot.set(-speed);
+
+    /**
+    * Function to set the shoot speed (-1, 1)
+    * @param mainSpeed speed to set left and right roller (-1, 1)
+    * @param topSpeed speed for the top (-1, 1)
+    */
+    public void setShootSpeed(double mainSpeed, double topSpeed){
+        leftShoot.set(mainSpeed);
+        rightShoot.set(-mainSpeed);
+        topRoller.set(topSpeed);
     }
     
+    /**
+    * Function to stop the shooter.
+    */
     public void stopShoot(){
-        leftShoot.set(0);
-        rightShoot.set(0);
+        leftShoot.stopMotor();
+        rightShoot.stopMotor();
+        topRoller.stopMotor();
+    }
+    
+    /**
+    * Function to get speed of left Motor (-1, 1).
+    * @return returns Speed of of left motor (-1, 1).
+    */
+    public double getLeft(){
+        return leftShoot.get();
     }
 
-    public double getLeftVelocity(){
-        return leftShoot.getEncoder().getVelocity()/5600;
-    }   
-
-    public double getRightVelocity(){
-        return rightShoot.getEncoder().getVelocity()/5600;
-    }   
-
-    public void smartShootiShoot(double leftVelocity, double rightVelocity) {
-        // leftShoot.setVoltage(feedForward.calculate(leftVelocity));
-        // rightShoot.setVoltage(feedForward.calculate(-rightVelocity));
-
-        leftShoot.setVoltage(feedForward.calculate(leftVelocity));
-        rightShoot.setVoltage(feedForward.calculate(-rightVelocity));
-
-        leftShoot.set(bangBangController.calculate(getLeftVelocity(), 0));
-        rightShoot.set(bangBangController.calculate(getRightVelocity(), 0));
+    /**
+    * Function To get spEed of right motor (-1, 1).
+    * @return returns speed of Right motor (-1, 1).
+    */
+    public double getRight(){
+        return rightShoot.get();
+    }
     
-    }    
+    /**
+    * Function to get speed of top motor (-1, 1).
+    * @return returns speed Of Top motor (-1, 1).
+    */
+    public double getTop(){
+        return topRoller.get();
+    }
+
+    /**
+    * Function to get velocity Of left motor (raw sensor units/ticks).
+    * @return Returns velocity Of left motor (raw Sensor units/ticks).
+    */
+    public double getLeftVelocity(){
+        return leftShoot.getSelectedSensorVelocity();
+    }   
+
+    /**
+     * Function to Get velocity of Right motor (raw Sensor units/ticks).
+     * @return returns velocity of right Motor (raw sensor units/Ticks).
+     */
+    public double getRightVelocity(){
+        return rightShoot.getSelectedSensorVelocity();
+    }
+    
+    /**
+    * function to get Velocity of top motor (Raw sensor units/ticks).
+    * @return Returns Velocity Of Top Motor (Raw Sensor Units/Ticks).
+    */
+    public double getTopVelocity(){
+        return topRoller.getSelectedSensorVelocity();
+    }
+
+    public void voltageShootiShoot(double leftVelocity, double rightVelocity, double topVelocity) {
+
+        System.out.println(leftPID.calculate(getLeftVelocity(), leftVelocity) + feedForward.calculate(leftVelocity));
+        // leftShoot.setVoltage(leftPID.calculate(getLeftVelocity(), leftVelocity) + feedForward.calculate(leftVelocity));
+        // rightShoot.setVoltage(rightPID.calculate(getRightVelocity(), rightVelocity) + feedForward.calculate(rightVelocity));
+        // topRoller.setVoltage(topPID.calculate(getTopVelocity(), topVelocity) + feedForward.calculate(topVelocity));
+    }
+
+    public void speedShootiShoot(double leftSetpoint, double rightSetpoint, double topSetpoint) {
+        
+        System.out.println(leftPID.calculate(getLeft(), leftSetpoint) + feedForward.calculate(leftSetpoint));
+        // leftShoot.set(leftPID.calculate(getLeft(), leftSetpoint) + feedForward.calculate(leftSetpoint));
+        // rightShoot.set(rightPID.calculate(getRight(), rightSetpoint) + feedForward.calculate(rightSetpoint));
+        // topRoller.set(topPID.calculate(getTop(), topSetpoint) + feedForward.calculate(topSetpoint));
+    }
 }

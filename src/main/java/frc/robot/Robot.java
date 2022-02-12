@@ -30,13 +30,15 @@ public class Robot extends TimedRobot {
    */
   	@Override
 	public void robotInit() {    
-		Subsystems.driveBase.setDefaultCommand(new TankDrive());
+		Subsystems.driveBase.setDefaultCommand(new ArcadeDrive());
 
 		// Might need to be moved to teleopPeriodic in order to function, but it might also work here.
 		// UserInterface.driverController.A.whenPressed(new RotateToBall());
 		// UserInterface.driverController.X.whenPressed(new FollowBall());
 		UserInterface.driverController.X.whileHeld(new FollowBall());
 		UserInterface.driverController.Y.whileHeld(new ShootDistance());
+		UserInterface.driverController.B.whenPressed(new PIDFollowBall());
+		
   	}
 
 	@Override

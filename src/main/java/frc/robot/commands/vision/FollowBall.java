@@ -25,7 +25,7 @@ public class FollowBall extends CommandBase{
     public FollowBall(){
         setName("FollowBall");
         addRequirements(Subsystems.driveBase);
-        pipelineIndex = RobotMap.teamColor == RobotMap.TeamColor.RED ? RobotMap.RedBallPipelineIndex : RobotMap.BlueBallPipelineIndex;
+        pipelineIndex = RobotMap.teamColor == RobotMap.TeamColor.RED ? RobotMap.RED_BALL_PIPELINE_INDEX : RobotMap.BLUE_BALL_PIPELINE_INDEX;
     }
     
     public void initialize(){
@@ -42,7 +42,7 @@ public class FollowBall extends CommandBase{
         noTargetCounter = 0;
         yPos = target.getPitch();
         xPos = target.getYaw();
-        distance = PhotonUtils.calculateDistanceToTargetMeters(RobotMap.ballCameraHeightMeters, RobotMap.ballHeightMeters, Units.degreesToRadians(RobotMap.ballCameraDegreesHoriz), Units.degreesToRadians(yPos));
+        distance = PhotonUtils.calculateDistanceToTargetMeters(RobotMap.BALL_CAMERA_HEIGHT_METERS, RobotMap.BALL_HEIGHT_METERS, Units.degreesToRadians(RobotMap.BALL_CAMERA_DEGREES_HORIZ), Units.degreesToRadians(yPos));
         travelSpeed = Math.log1p(distance*10)*0.5;
         travelSpeed *= 0.6;
         travelSpeed = RobotMap.cap(travelSpeed, 0.3, 0.8);
@@ -63,7 +63,7 @@ public class FollowBall extends CommandBase{
     }
     
     public boolean isFinished(){
-        if (noTargetCounter > RobotMap.maxNoTargetCounter){
+        if (noTargetCounter > RobotMap.MAX_NO_TARGET_COUNTER){
             return true;
         }
         return distance < 0.1;

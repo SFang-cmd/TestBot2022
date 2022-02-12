@@ -6,3 +6,7 @@
 6. Align to hub (PID)
 7. Shoot after aligning to hub
 8. Shoot after aligning to hub (PID)
+
+
+1. start shooter
+2. if shooter at certain speed, shoot balls
