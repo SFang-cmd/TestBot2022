@@ -32,10 +32,12 @@ public class ArcadeDrive extends CommandBase{
         this.speed = 0;
         this.lastSpeed = 0;
         this.speedDiff = 0;
+        // System.out.println("Hi1");
     }
 
     @Override
     public void execute(){
+        // System.out.println("Hi2");
         speed = UserInterface.driverController.getLeftJoystickY();
         rotation = UserInterface.driverController.getRightJoystickX();
         

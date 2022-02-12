@@ -23,10 +23,6 @@ public class Transversal extends SubsystemBase {
     public void motorForward(double speed){
         transversal.set(speed);
     }
-
-    public void motorBack(double speed){
-        transversal.set(-speed);
-    }
     
     public void stopMotor(){
         transversal.stopMotor();

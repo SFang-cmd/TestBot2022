@@ -14,10 +14,7 @@ public class RobotMap {
     // motor port numbers
     public enum RobotType{
         COMP, PBOT, TOASTER 
-    }
-
-    
-    
+    }    
     
     // Left side motor port numbers
     public static int leftMiddleMasterPort = 2;
@@ -44,9 +41,6 @@ public class RobotMap {
     public static final int cellStopPort = 1086;
 
     // Intake stuff
-    // public static int intakePivot = 46;
-    // public static int intakeLeftArm = 9;
-    // public static int intakeRightArm = 10;
     // public static int lift = 11;
     public static final int extensionInPort = 424;
     public static final int extensionOutPort = 427;
@@ -54,23 +48,23 @@ public class RobotMap {
     public static final int beamBreakPort = 429;
     
     // Shooter
-    public static final int RIGHT_FLY_PORT = 6;
-    public static final int LEFT_FLY_PORT = 3;
-    public static final int FLY_ROLLI_ROLL = 0;
+    public static final int rightFlyPort = 6;
+    public static final int leftFlyPort = 3;
+    public static final int flyRolliRoll = 0;
 
     // Dimensions for Vision Calculations
-    public static final double BALL_CAMERA_HEIGHT_METERS = 0.75;
-    public static final double BALL_HEIGHT_METERS = 0.1;
-    public static final double BALL_CAMERA_DEGREES_HORIZ = -25;
+    public static final double ballCameraHeightMeters = 0.75;
+    public static final double ballHeightMeters = 0.1;
+    public static final double ballCameraDegreesHoriz = -25;
     
-    public static final double TARGET_CAMERA_HEIGHT_METERS = 0.79;
-    public static final double TARGET_HEIGHT_METERS = 2.642;
-    public static final double HUB_CAMERA_DEGREES_HORIZ = 15;
+    public static final double targetCameraHeightMeters = 0.79;
+    public static final double targetHeightMeters = 2.642;
+    public static final double hubCameraDegreesHoriz = 15;
 
-    public static final int MAX_NO_TARGET_COUNTER = 9;
+    public static final int maxNoTargetCounter = 9;
     
-    public static final int BLUE_BALL_PIPELINE_INDEX = 0;
-    public static final int RED_BALL_PIPELINE_INDEX = 1;
+    public static final int blueBallPipelineIndex = 0;
+    public static final int redBallPipelineIndex = 1;
     
     //PIDFollowBall params for PIDController
     public static double kP = 1;
